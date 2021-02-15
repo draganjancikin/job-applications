@@ -22,7 +22,7 @@ function job_applications_mail($key, &$message, $params) {
 function job_applications_cron() {
 
   // Check: it is now monday 8 o'clock.
-  if (date('H')==21 && date('i')==00 && date('l')=="Monday") {
+  if (date('G')==8 && date('i')==00 && date('l')=="Monday") {
 
     // Start time is 7 days ago.
     $start_time = time() - 604800;
