@@ -1,0 +1,7 @@
+job_applications.report:
+  path: '/admin/reports/job-applications'
+  defaults:
+    _controller: '\Drupal\job_applications\Controller\ReportController::report'
+    _title: 'List of Job Applications'
+  requirements:
+    _permission: 'administer site configuration'

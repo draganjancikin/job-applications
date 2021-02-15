@@ -1,0 +1,55 @@
+<?php
+function job_applications_schema() {
+  $schema['job_applications'] = array(
+    'description' => '',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The primary identifier for the record.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'The primary identifier for the record.',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'email' => array(
+        'description' => 'User\s email address.',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'type' => array(
+        'description' => 'The type of jobs.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'technology' => array(
+        'description' => 'The tecnology used on job.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'message' => array(
+        'description' => 'The user message.',
+        'type' => 'text',
+        'length' => 255,
+      ),
+      'created_at' => array(
+        'description' => 'The time that the job application record was created (unix timestamp).',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}

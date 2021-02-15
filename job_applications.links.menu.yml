@@ -1,0 +1,6 @@
+job_applications.report:
+  title: 'List of Job Applications'
+  description: 'View listing of Job Applications'
+  route_name: job_applications.report
+  parent: system.admin_reports
+  weight: 0

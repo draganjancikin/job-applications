@@ -1,0 +1,6 @@
+name: Job Applications
+description: Allows user to applicate to jobs.
+package: Job Applications
+type: module
+version: 1.0
+core: 8.x

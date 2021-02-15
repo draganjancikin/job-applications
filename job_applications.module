@@ -1,0 +1,49 @@
+<?php
+use Drupal\Core\Database\Database;
+/**
+* Implements hook_mail().
+*/
+function job_applications_mail($key, &$message, $params) {
+  $options = array(
+    'langcode' => $message['langcode'],
+  );
+  switch ($key) {
+    case 'job_applications_send_mail':
+      $message['from'] = \Drupal::config('system.site')->get('mail');
+      $message['subject'] = t('@subject', array('@subject' => $params['subject']), $options);
+      $message['body'][] = $params['message'];
+      break;
+  }
+}
+
+/**
+* Implements hook_cron().
+*/
+function job_applications_cron() {
+
+  // Check: it is now monday 8 o'clock.
+  if (date('H')==21 && date('i')==00 && date('l')=="Monday") {
+
+    // Start time is 7 days ago.
+    $start_time = time() - 604800;
+    // End time is now.
+    $end_time = time();
+
+    // Select all job applications of last 7 days
+    $select = Database::getConnection()
+      ->select('job_applications', 'j')
+      ->fields('j', array('name', 'email', 'type', 'technology', 'message'))
+      ->condition('j.created_at', array($start_time, $end_time), 'BETWEEN');
+    $job_applications = $select->execute()->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Get queue.
+    $queue = \Drupal::queue('send_mail_queue');
+
+    foreach ($job_applications as $job_application) {
+      // Create item to queue.
+      $queue->createItem($job_application);
+    }
+
+  }
+
+}
